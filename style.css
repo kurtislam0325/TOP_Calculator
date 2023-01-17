@@ -1,0 +1,13 @@
+#calculation {
+    height: 100px;
+    width: 200px;
+    border: 1px solid black;
+    background-color: azure;
+}
+
+#result {
+    height: 100px;
+    width: 200px;
+    border: 1px solid black;
+    background-color: aquamarine;
+}
