@@ -144,7 +144,7 @@ numberButtons.forEach((button) => {
 clearButton.addEventListener("click", () => {
     clear();
     calScreen.textContent = calculation;
-    resultScreen.textContent = calculation;
+    resultScreen.textContent = "0";
 })
 
 deleteButton.addEventListener("click", () => { 
