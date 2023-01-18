@@ -102,7 +102,7 @@ function clear() {
 
 function operate() {
     // error 
-    if (calculation.length > 10) {
+    if (calculation.length > 20) {
         calScreen.textContent = "";
         resultScreen.textContent = "Math Error";
         clear();
@@ -116,14 +116,25 @@ function operate() {
     }, 0);
     
     let operatorError = function(calculation) {
+        let count = 0;
         for (let i = 0; i < calculation.length-1; i++) {
-            if (isOperator(calculation[i]) && isOperator(calculation[i+1]))
-                return true;
+            if (isOperator(calculation[i]) || calculation[i] === "%") {
+                count++;
+                if (isOperator(calculation[i+1]))
+                    return true;
+            }
         }
+
+        if (calculation[calculation.length-1] === "%")
+            count++;
+        console.log(count);
+        if (count == calculation.length)
+            return true;
+
         return false;
     }
 
-    if ((isOperator(calculation[calculation.length-1])) || calculation[calculation.length-1] === "%" || floatError 
+    if ((isOperator(calculation[calculation.length-1])) || floatError 
         || operatorError(calculation) || (calculation.includes("/0"))) {
         calScreen.textContent = "";
         resultScreen.textContent = "Syntax Error";

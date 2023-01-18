@@ -1,0 +1,1 @@
+        // count = (calculation[calculation.length-1] === "%")? count++: count;
