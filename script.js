@@ -120,17 +120,15 @@ function operate() {
         for (let i = 0; i < calculation.length-1; i++) {
             if (isOperator(calculation[i]) || calculation[i] === "%") {
                 count++;
-                if (isOperator(calculation[i+1]))
+                if (isOperator(calculation[i+1]) || calculation[i+1] === "%")
                     return true;
             }
         }
-
         if (calculation[calculation.length-1] === "%")
             count++;
-        console.log(count);
+            
         if (count == calculation.length)
             return true;
-
         return false;
     }
 
@@ -145,7 +143,6 @@ function operate() {
     if (isOperator(calculation[0]))
         firstNumber = ans;
     else {
-        console.log(1223)
         firstNumber = "";
         secondNumber = "";
     }
