@@ -3,6 +3,7 @@ const resultScreen = document.querySelector("#result");
 
 const operatorButtons = document.querySelectorAll(".operator");
 
+const buttons = document.querySelectorAll(".button");
 const addButton = document.querySelector("#add");
 const subtractButton = document.querySelector("#subtract");
 const multiplyButton = document.querySelector("#multiply");
@@ -101,12 +102,30 @@ function clear() {
 
 function operate() {
     // error 
-    let numOfFpts = [...calculation].reduce(function(numOfFpts, c) { 
+    if (calculation.length > 10) {
+        calScreen.textContent = "";
+        resultScreen.textContent = "Math Error";
+        clear();
+        return;
+    }
+
+    let floatError = [...calculation].reduce(function(numOfFpts, c) { 
         if(c === ".")
             numOfFpts++; 
         return numOfFpts;
     }, 0);
-    if ((isOperator(calculation[calculation.length-1])) || (numOfFpts > 1) || (calculation.includes("/0"))) {
+    
+    let operatorError = function(calculation) {
+        for (let i = 0; i < calculation.length-1; i++) {
+            if (isOperator(calculation[i]) && isOperator(calculation[i+1]))
+                return true;
+        }
+        return false;
+    }
+
+    if ((isOperator(calculation[calculation.length-1])) || calculation[calculation.length-1] === "%" || floatError 
+        || operatorError(calculation) || (calculation.includes("/0"))) {
+        calScreen.textContent = "";
         resultScreen.textContent = "Syntax Error";
         clear();
         return;
@@ -136,6 +155,9 @@ operatorButtons.forEach((button) => {
 
 numberButtons.forEach((button) => {
     button.addEventListener("click", () => {
+        if (calculation.length > 17)
+            calculation = calculation.slice(1);
+
         calculation += button.id;
         calScreen.textContent = calculation;
     })
@@ -150,6 +172,18 @@ clearButton.addEventListener("click", () => {
 deleteButton.addEventListener("click", () => { 
     calculation = calculation.slice(0, calculation.length - 1)
     calScreen.textContent = calculation;
+})
+
+buttons.forEach((button) => {
+    button.addEventListener("mouseenter", () => {
+        button.style.backgroundColor = "rgb(90, 90, 90)";
+    })
+    button.addEventListener("mousedown", () => {
+        button.style.backgroundColor = "rgb(70, 70, 70)";
+    })
+    button.addEventListener("mouseout", () => {
+        button.style.backgroundColor = "white";
+    })
 })
 
 operateButton.addEventListener("click", operate);
